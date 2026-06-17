@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ConvoRAG – Conversation Intelligence Chatbot</title>
+  <meta name="description" content="AI-powered chatbot that analyzes conversation data using RAG, topic checkpoints, and persona extraction." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <!-- Animated background -->
+  <div class="bg-orbs">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <div class="app-shell">
+    <!-- ===== LEFT SIDEBAR ===== -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="logo">
+          <span class="logo-icon">🧠</span>
+          <div>
+            <h1 class="logo-title">ConvoRAG</h1>
+            <p class="logo-sub">Conversation Intelligence</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stats bar -->
+      <div class="stats-grid" id="stats-grid">
+        <div class="stat-card">
+          <span class="stat-value" id="stat-messages">–</span>
+          <span class="stat-label">Messages</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-value" id="stat-topics">–</span>
+          <span class="stat-label">Topics</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-value" id="stat-checkpoints">–</span>
+          <span class="stat-label">Checkpoints</span>
+        </div>
+      </div>
+
+      <!-- Quick questions -->
+      <div class="section-label">Quick Questions</div>
+      <div class="quick-queries" id="quick-queries">
+        <button class="quick-btn" data-query="What kind of person is this user?">👤 Who is this user?</button>
+        <button class="quick-btn" data-query="What are their habits?">🔄 Their habits</button>
+        <button class="quick-btn" data-query="How do they communicate and talk?">💬 Communication style</button>
+        <button class="quick-btn" data-query="What are their hobbies and interests?">🎯 Hobbies & interests</button>
+        <button class="quick-btn" data-query="What is their personality like?">✨ Personality traits</button>
+        <button class="quick-btn" data-query="Tell me about their family and relationships">👨‍👩‍👧 Family info</button>
+        <button class="quick-btn" data-query="What jobs or occupations are mentioned?">💼 Occupations</button>
+        <button class="quick-btn" data-query="What pets do they have?">🐾 Their pets</button>
+      </div>
+
+      <!-- Topic timeline -->
+      <div class="section-label">Topic Timeline</div>
+      <div class="topic-timeline" id="topic-timeline">
+        <div class="timeline-loading">Loading topics…</div>
+      </div>
+    </aside>
+
+    <!-- ===== MAIN AREA ===== -->
+    <main class="main-area">
+      <!-- Top bar -->
+      <header class="topbar">
+        <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Toggle sidebar">☰</button>
+        <div class="topbar-title">
+          <span>Chat with Conversation Data</span>
+          <span class="status-dot" id="status-dot" title="System status"></span>
+        </div>
+        <button class="persona-btn" id="persona-btn">🧬 View Persona</button>
+      </header>
+
+      <!-- Chat window -->
+      <section class="chat-window" id="chat-window" aria-live="polite">
+        <div class="welcome-card" id="welcome-card">
+          <div class="welcome-icon">🧠</div>
+          <h2>ConvoRAG Intelligence System</h2>
+          <p>Ask me anything about the conversations. I'll use <strong>topic checkpoints</strong>, <strong>semantic retrieval</strong>, and <strong>persona analysis</strong> to answer.</p>
+          <div class="welcome-examples">
+            <span class="chip" data-query="What kind of person is this user?">What kind of person is this user?</span>
+            <span class="chip" data-query="What are their main habits?">Main habits?</span>
+            <span class="chip" data-query="How do they communicate?">Communication style?</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Input area -->
+      <footer class="input-area">
+        <div class="input-wrapper">
+          <textarea
+            id="chat-input"
+            class="chat-input"
+            placeholder="Ask anything about the conversations…"
+            rows="1"
+            aria-label="Chat input"
+          ></textarea>
+          <button class="send-btn" id="send-btn" aria-label="Send message">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <line x1="22" y1="2" x2="11" y2="13"></line>
+              <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+            </svg>
+          </button>
+        </div>
+        <div class="input-hint">Powered by sentence-transformers + FAISS · Fully local</div>
+      </footer>
+    </main>
+
+    <!-- ===== PERSONA PANEL ===== -->
+    <div class="panel-overlay" id="panel-overlay"></div>
+    <aside class="persona-panel" id="persona-panel">
+      <div class="panel-header">
+        <h2>🧬 User Persona</h2>
+        <button class="close-panel" id="close-panel" aria-label="Close panel">✕</button>
+      </div>
+      <div class="panel-content" id="panel-content">
+        <div class="panel-loading">Loading persona…</div>
+      </div>
+    </aside>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>
