@@ -1,5 +1,6 @@
 .env
-data/
+data/embeddings.npy
+data/messages.json
 __pycache__/
 *.pyc
 *.pyo

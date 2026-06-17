@@ -1,0 +1,102 @@
+{
+  "total_messages_analysed": 191592,
+  "habits": [
+    "late sleeper",
+    "movie watcher",
+    "early riser",
+    "traveller",
+    "cook",
+    "pet owner",
+    "outdoorsy",
+    "gamer",
+    "reader",
+    "exercises regularly",
+    "music lover",
+    "social"
+  ],
+  "personal_facts": {
+    "mentioned_occupations": [
+      "teacher",
+      "student",
+      "writer"
+    ],
+    "family": [
+      "in_relationship",
+      "has_siblings",
+      "has_parents",
+      "single_parent",
+      "has_children"
+    ],
+    "mentioned_locations": [
+      "Japan",
+      "California",
+      "New York",
+      "Chicago",
+      "Florida"
+    ],
+    "pets": [
+      "rabbit",
+      "horse",
+      "dog",
+      "fish",
+      "bird",
+      "cat"
+    ],
+    "hobbies": [
+      "hiking",
+      "fishing",
+      "cooking",
+      "reading",
+      "gaming",
+      "dancing",
+      "singing",
+      "yoga",
+      "photography",
+      "gardening",
+      "painting",
+      "writing",
+      "cycling",
+      "running",
+      "swimming",
+      "skiing",
+      "surfing",
+      "archery",
+      "juggling",
+      "karaoke"
+    ]
+  },
+  "personality_traits": [
+    "positive",
+    "family_oriented",
+    "curious",
+    "empathetic",
+    "adventurous",
+    "humorous"
+  ],
+  "communication_style": {
+    "avg_message_length_words": 11.3,
+    "emoji_usage": "rare",
+    "emoji_ratio": 0.0,
+    "question_ratio": 0.229,
+    "exclamation_ratio": 0.53,
+    "tone": "casual",
+    "all_caps_words": 1680
+  },
+  "topics_of_interest": [
+    "favorite",
+    "doing",
+    "time",
+    "always",
+    "cool",
+    "music",
+    "read",
+    "awesome",
+    "work",
+    "play",
+    "things",
+    "family",
+    "kind",
+    "enjoy",
+    "today"
+  ]
+}
