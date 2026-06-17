@@ -167,11 +167,13 @@ def api_chat(req: ChatRequest):
 # ── Entry point ────────────────────────────────────────────────────────────────
 if __name__ == "__main__":
     import uvicorn
+    import os
 
     if not (DATA_DIR / "checkpoints.json").exists():
         print("ERROR: Data not built. Run: python build_index.py")
         raise SystemExit(1)
 
-    print("Starting ConvoRAG at http://localhost:5000")
-    print("API docs at  http://localhost:5000/docs")
-    uvicorn.run("app:app", host="0.0.0.0", port=5000, reload=False)
+    port = int(os.getenv("PORT", 5000))
+    print(f"Starting ConvoRAG on port {port}")
+    print(f"API docs at  http://localhost:{port}/docs")
+    uvicorn.run("app:app", host="0.0.0.0", port=port, reload=False)

@@ -513,3 +513,71 @@ body {
   .sidebar { position: absolute; z-index: 20; }
   :root { --panel-w: 100vw; }
 }
+
+/* ===================== Topbar Actions & Settings Panel ===================== */
+.topbar-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.settings-btn {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-2);
+  font-family: var(--font);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 8px 14px;
+  cursor: pointer;
+  transition: all var(--transition);
+  white-space: nowrap;
+}
+.settings-btn:hover {
+  background: var(--surface-2);
+  border-color: var(--accent);
+  color: var(--text-1);
+}
+
+.settings-panel {
+  position: fixed; right: 0; top: 0; bottom: 0;
+  width: var(--panel-w); z-index: 40;
+  background: rgba(12,16,28,0.95);
+  backdrop-filter: blur(30px);
+  border-left: 1px solid var(--border);
+  display: flex; flex-direction: column;
+  transform: translateX(100%);
+  transition: transform var(--transition);
+}
+.settings-panel.open { transform: translateX(0); }
+
+.settings-group {
+  display: flex; flex-direction: column; gap: 6px;
+  margin-bottom: 16px;
+}
+.settings-group label {
+  font-size: 12px; font-weight: 600; color: var(--text-2);
+}
+.settings-group input {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-1);
+  font-family: var(--font);
+  font-size: 13px;
+  padding: 10px 12px; outline: none;
+  transition: border-color var(--transition);
+}
+.settings-group input:focus { border-color: var(--accent); }
+.settings-hint { font-size: 11px; color: var(--text-3); line-height: 1.4; }
+
+.save-settings-btn {
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
+  border: none; border-radius: var(--radius-sm);
+  color: #fff; font-family: var(--font); font-size: 13px; font-weight: 600;
+  padding: 10px 16px; cursor: pointer;
+  transition: opacity var(--transition), transform var(--transition);
+  text-align: center;
+}
+.save-settings-btn:hover { opacity: 0.9; transform: scale(1.02); }

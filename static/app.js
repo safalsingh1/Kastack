@@ -2,22 +2,29 @@
    ConvoRAG – Frontend App Logic
    ===================================================== */
 
-const API = "";   // same origin
+let API = localStorage.getItem("CONVORAG_API_URL") || "";
 
 // ── DOM refs ──────────────────────────────────────────
-const chatWindow    = document.getElementById("chat-window");
-const chatInput     = document.getElementById("chat-input");
-const sendBtn       = document.getElementById("send-btn");
-const welcomeCard   = document.getElementById("welcome-card");
-const personaBtn    = document.getElementById("persona-btn");
-const closePanel    = document.getElementById("close-panel");
-const personaPanel  = document.getElementById("persona-panel");
-const panelOverlay  = document.getElementById("panel-overlay");
-const panelContent  = document.getElementById("panel-content");
-const topicTimeline = document.getElementById("topic-timeline");
-const sidebarToggle = document.getElementById("sidebar-toggle");
-const sidebar       = document.getElementById("sidebar");
-const statusDot     = document.getElementById("status-dot");
+const chatWindow     = document.getElementById("chat-window");
+const chatInput      = document.getElementById("chat-input");
+const sendBtn        = document.getElementById("send-btn");
+const welcomeCard    = document.getElementById("welcome-card");
+const personaBtn     = document.getElementById("persona-btn");
+const closePanel     = document.getElementById("close-panel");
+const personaPanel   = document.getElementById("persona-panel");
+const panelOverlay   = document.getElementById("panel-overlay");
+const panelContent   = document.getElementById("panel-content");
+const topicTimeline  = document.getElementById("topic-timeline");
+const sidebarToggle  = document.getElementById("sidebar-toggle");
+const sidebar        = document.getElementById("sidebar");
+const statusDot      = document.getElementById("status-dot");
+
+// Settings DOM refs
+const settingsBtn     = document.getElementById("settings-btn");
+const settingsPanel   = document.getElementById("settings-panel");
+const closeSettings   = document.getElementById("close-settings");
+const apiUrlInput     = document.getElementById("api-url-input");
+const saveSettingsBtn = document.getElementById("save-settings-btn");
 
 // ── State ─────────────────────────────────────────────
 let isLoading = false;
@@ -25,11 +32,24 @@ let isLoading = false;
 // =====================================================
 // Init
 // =====================================================
-(async function init() {
-  await Promise.all([loadStats(), loadTimeline()]);
-  statusDot.classList.add("online");
-  statusDot.title = "System ready";
-})();
+async function init() {
+  statusDot.className = "status-dot loading";
+  statusDot.title = "Connecting...";
+  
+  // Load input value
+  apiUrlInput.value = localStorage.getItem("CONVORAG_API_URL") || "";
+  
+  try {
+    await Promise.all([loadStats(), loadTimeline()]);
+    statusDot.className = "status-dot online";
+    statusDot.title = "System ready";
+  } catch (err) {
+    statusDot.className = "status-dot";
+    statusDot.title = "Connection failed";
+  }
+}
+
+document.addEventListener("DOMContentLoaded", init);
 
 // =====================================================
 // Stats
@@ -80,11 +100,20 @@ async function loadTimeline() {
 }
 
 // =====================================================
-// Persona Panel
+// Panels (Persona & Settings)
 // =====================================================
 personaBtn.addEventListener("click", openPersonaPanel);
 closePanel.addEventListener("click", closePersonaPanel);
-panelOverlay.addEventListener("click", closePersonaPanel);
+
+settingsBtn.addEventListener("click", openSettingsPanel);
+closeSettings.addEventListener("click", closeSettingsPanel);
+
+panelOverlay.addEventListener("click", () => {
+  closePersonaPanel();
+  closeSettingsPanel();
+});
+
+saveSettingsBtn.addEventListener("click", saveSettings);
 
 function openPersonaPanel() {
   personaPanel.classList.add("open");
@@ -95,6 +124,28 @@ function openPersonaPanel() {
 function closePersonaPanel() {
   personaPanel.classList.remove("open");
   panelOverlay.classList.remove("active");
+}
+
+function openSettingsPanel() {
+  settingsPanel.classList.add("open");
+  panelOverlay.classList.add("active");
+}
+
+function closeSettingsPanel() {
+  settingsPanel.classList.remove("open");
+  panelOverlay.classList.remove("active");
+}
+
+async function saveSettings() {
+  const url = apiUrlInput.value.trim().replace(/\/$/, ""); // trim trailing slash
+  localStorage.setItem("CONVORAG_API_URL", url);
+  API = url;
+  
+  // Clear cached persona so it reloads from new API
+  delete panelContent.dataset.loaded;
+  
+  closeSettingsPanel();
+  await init();
 }
 
 async function loadPersona() {

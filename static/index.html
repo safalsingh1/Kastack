@@ -75,7 +75,10 @@
           <span>Chat with Conversation Data</span>
           <span class="status-dot" id="status-dot" title="System status"></span>
         </div>
-        <button class="persona-btn" id="persona-btn">🧬 View Persona</button>
+        <div class="topbar-actions">
+          <button class="settings-btn" id="settings-btn">⚙️ API Config</button>
+          <button class="persona-btn" id="persona-btn">🧬 View Persona</button>
+        </div>
       </header>
 
       <!-- Chat window -->
@@ -122,6 +125,22 @@
       </div>
       <div class="panel-content" id="panel-content">
         <div class="panel-loading">Loading persona…</div>
+      </div>
+    </aside>
+
+    <!-- ===== SETTINGS PANEL ===== -->
+    <aside class="settings-panel" id="settings-panel">
+      <div class="panel-header">
+        <h2>⚙️ API Settings</h2>
+        <button class="close-panel" id="close-settings" aria-label="Close settings">✕</button>
+      </div>
+      <div class="panel-content">
+        <div class="settings-group">
+          <label for="api-url-input">Backend API URL</label>
+          <input type="url" id="api-url-input" placeholder="e.g. https://your-backend.up.railway.app" />
+          <p class="settings-hint">Configure the remote Railway API URL when deployed on Vercel. Leave blank to fallback to local origin.</p>
+        </div>
+        <button class="save-settings-btn" id="save-settings-btn">Save Settings</button>
       </div>
     </aside>
   </div>
