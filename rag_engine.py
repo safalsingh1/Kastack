@@ -3,7 +3,7 @@ rag_engine.py
 -------------
 Retrieval-Augmented Generation engine using:
   • FAISS for vector retrieval  (sentence-transformers / all-MiniLM-L6-v2)
-  • Groq API for LLM answer generation  (llama-3.3-70b-versatile)
+  • Groq API for LLM answer generation  (llama-3.1-8b-instant)
 
 Two FAISS indexes:
   checkpoint_index  – one vector per checkpoint summary (topic + 100-msg)
@@ -34,7 +34,7 @@ MSG_INDEX_PATH    = DATA_DIR / "msg_index.faiss"
 MSG_META_PATH     = DATA_DIR / "msg_index_meta.json"
 
 EMBED_MODEL   = "all-MiniLM-L6-v2"
-GROQ_MODEL    = "llama-3.3-70b-versatile"          # fastest Groq model
+GROQ_MODEL    = "llama-3.1-8b-instant"          # model with higher rate limits
 MSG_SAMPLE_EVERY = 5   # index every Nth message
 
 SYSTEM_PROMPT = """You are ConvoRAG, an intelligent conversation analyst.

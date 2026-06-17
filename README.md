@@ -1,6 +1,6 @@
 # ConvoRAG – Conversation Intelligence System
 
-A fully local RAG (Retrieval-Augmented Generation) system that analyses a large conversation dataset, detects topic changes chronologically, extracts a user persona, and powers an interactive chatbot backed by **Groq LLM** (llama-3.3-70b-versatile) + **FAISS** semantic search.
+A fully local RAG (Retrieval-Augmented Generation) system that analyses a large conversation dataset, detects topic changes chronologically, extracts a user persona, and powers an interactive chatbot backed by **Groq LLM** (llama-3.1-8b-instant) + **FAISS** semantic search.
 
 ---
 
@@ -101,7 +101,7 @@ At query time:
 1. Query is embedded with the same model
 2. **Top-5 checkpoint summaries** retrieved (cosine similarity on topic+100-msg index)
 3. **Top-8 message snippets** retrieved (sampled message index)
-4. Context fed to **Groq llama-3.3-70b-versatile** for answer generation
+4. Context fed to **Groq llama-3.1-8b-instant** for answer generation
 
 ---
 
@@ -157,7 +157,7 @@ For open-ended questions, full RAG+Groq is used.
 |---|---|
 | `sentence-transformers` | Local message/query embeddings |
 | `faiss-cpu` | Fast vector similarity search |
-| `groq` | LLM answer generation (llama-3.3-70b-versatile) |
+| `groq` | LLM answer generation (llama-3.1-8b-instant) |
 | `fastapi` | Web API + UI server |
 | `uvicorn` | ASGI server |
 | `spacy` | NLP for persona extraction |
