@@ -286,6 +286,64 @@ class RAGEngine:
         self.load()
         q = query.lower()
 
+        # ── Direct topic query routing ──
+        # If the query asks about a specific chronological topic index (e.g. "Topic 2"),
+        # retrieve its summary and message snippets directly rather than relying on semantic search.
+        import re
+        topic_match = re.search(r'\btopic\s+(\d+)\b', q)
+        if topic_match:
+            try:
+                topic_num = int(topic_match.group(1))
+                target_id = f"topic_{topic_num - 1}"
+                
+                cp_file = DATA_DIR / "checkpoints.json"
+                if cp_file.exists():
+                    checkpoints = json.loads(cp_file.read_text(encoding="utf-8"))
+                    target_cp = next((c for c in checkpoints if c["id"] == target_id), None)
+                    if target_cp:
+                        # Found the exact topic checkpoint!
+                        context_summary = f"[{target_cp['label']}] {target_cp['summary']}\nKeywords: {', '.join(target_cp.get('keywords', []))}"
+                        
+                        msg_context = ""
+                        # Load msg_index_meta.json (which is small and committed to GitHub) to extract actual messages
+                        meta_file = DATA_DIR / "msg_index_meta.json"
+                        if meta_file.exists():
+                            with open(meta_file, "r") as f:
+                                msg_meta = json.load(f)
+                            start_id = int(target_cp["start_msg"])
+                            end_id = int(target_cp["end_msg"])
+                            # Find messages that fall inside this chronological range
+                            seg_msgs = [
+                                m for m in msg_meta
+                                if start_id <= int(m["global_id"]) <= end_id
+                            ]
+                            if len(seg_msgs) > 15:
+                                seg_msgs = seg_msgs[:15]
+                            msg_lines = [f"  • (msg {m['global_id']}) \"{m['text']}\"" for m in seg_msgs]
+                            msg_context = "\n### Relevant Message Snippets\n" + "\n".join(msg_lines)
+                        
+                        context = f"### Topic / Checkpoint Summaries\n{context_summary}\n{msg_context}"
+                        
+                        # Generate answer grounded only in this topic segment
+                        if self._groq_client:
+                            try:
+                                answer_text = self._groq_answer(query, context)
+                            except Exception as e:
+                                print(f"[rag_engine] Groq error in direct topic: {e}. Falling back.")
+                                answer_text = self._template_answer(query, [target_cp], seg_msgs[:3] if 'seg_msgs' in locals() else [])
+                        else:
+                            answer_text = self._template_answer(query, [target_cp], seg_msgs[:3] if 'seg_msgs' in locals() else [])
+                            
+                        return {
+                            "answer": answer_text,
+                            "sources": {
+                                "checkpoints": [target_cp],
+                                "messages": seg_msgs if 'seg_msgs' in locals() else []
+                            }
+                        }
+            except Exception as ex:
+                print(f"[rag_engine] Error in direct topic routing: {ex}")
+
         # ── Persona shortcut routing ──
         # Only intercept DIRECT questions about the persona itself.
         # Questions that include "conversations", "people", "talk about X",

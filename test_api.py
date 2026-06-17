@@ -18,3 +18,5 @@ def ask(q):
 
 ask("What hobbies do people talk about in these conversations?")
 ask("Do they talk about music or bands?")
+ask("Tell me about the conversations in \"Topic 2\". Keywords: doing · impala · favorite · being · enjoy")
+ask("Tell me about the conversations in \"Topic 3\". Keywords: dog · day · pets · cat · best")
