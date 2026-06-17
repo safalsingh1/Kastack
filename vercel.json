@@ -1,0 +1,9 @@
+{
+  "version": 2,
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/style.css", "destination": "/static/style.css" },
+    { "source": "/app.js", "destination": "/static/app.js" },
+    { "source": "/(.*)", "destination": "/static/$1" }
+  ]
+}

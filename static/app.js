@@ -2,7 +2,7 @@
    ConvoRAG – Frontend App Logic
    ===================================================== */
 
-let API = localStorage.getItem("CONVORAG_API_URL") || "";
+let API = localStorage.getItem("CONVORAG_API_URL") || "https://kastack-production.up.railway.app";
 
 // ── DOM refs ──────────────────────────────────────────
 const chatWindow     = document.getElementById("chat-window");
